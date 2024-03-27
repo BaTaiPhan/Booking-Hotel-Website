@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TuThien" Class="FundDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.TheLoai" Member="TheLoais">
+    <Type Name="TheLoai">
+      <Column Name="maloai" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tenloai" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="TheLoai_Fund" Member="Funds" ThisKey="maloai" OtherKey="maloai" Type="Fund" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Account" Member="Accounts">
+    <Type Name="Account">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TaiKhoan" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Column Name="MatKhau" Type="System.String" DbType="NChar(30)" CanBeNull="true" />
+      <Association Name="Account_PhanQuyen" Member="PhanQuyens" ThisKey="ID" OtherKey="idTaiKhoan" Type="PhanQuyen" />
+      <Association Name="Account_Fund" Member="Funds" ThisKey="ID" OtherKey="id" Type="Fund" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PhanQuyen" Member="PhanQuyens">
+    <Type Name="PhanQuyen">
+      <Column Name="idTaiKhoan" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Quyen" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Account_PhanQuyen" Member="Account" ThisKey="idTaiKhoan" OtherKey="ID" Type="Account" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Donate" Member="Donates">
+    <Type Name="Donate">
+      <Column Name="IdDonate" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="congratulation" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NChar(20)" CanBeNull="true" />
+      <Column Name="amount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Donate_Fund" Member="Funds" ThisKey="IdDonate" OtherKey="id" Type="Fund" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fund" Member="Funds">
+    <Type Name="Fund">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="maloai" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="content" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="hinh" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="expected_result" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="created_date" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="end_date" Type="System.DateTime" DbType="SmallDateTime" CanBeNull="true" />
+      <Column Name="full_amount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TheLoai_Fund" Member="TheLoai" ThisKey="maloai" OtherKey="maloai" Type="TheLoai" IsForeignKey="true" />
+      <Association Name="Donate_Fund" Member="Donate" ThisKey="id" OtherKey="IdDonate" Type="Donate" IsForeignKey="true" />
+      <Association Name="Account_Fund" Member="Account" ThisKey="id" OtherKey="ID" Type="Account" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
